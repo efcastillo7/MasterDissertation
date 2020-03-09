@@ -1,0 +1,95 @@
+\textbf{First stream.}
+Tootoonchian \textit{et al.} proposed OpenTm \cite{Tootoonchian_2010:opentm} to estimate the traffic matrix using the routing information of the controller and flow forwarding path information to choose an optimal set of switches to be monitored for each flow. After a switch has been selected, it is periodically polled for collecting flow level statistics. Van Adrichem \textit{et al.} proposed OpenNetMon \cite{van_2014:OpenNetMon} to use an adaptive fetching mechanism to pull data from switches to monitor throughput, delay, and packet loss. OpenNetMon uses an adaptive fetching mechanism to pull data from switches, where the rate of the queries increases (high CPU overhead) when more accurate performance parameters are required (\textit{i.e.}, accuracy increases at the expense of network overhead).
+
+Chowdhury \textit{et al.} proposed PayLess \cite{chowdhury_2014:payless} to deal with monitoring considering the trade-off between accuracy and network overhead. Payless adjusts the polling frequency to balance the control channel overhead, imposed by monitoring messages, and accuracy of monitored information. The query frequency determines the level of monitoring accuracy and network overhead. Payless relies on OpenTM \cite{Tootoonchian_2010:opentm} to select only important switches to be monitored, also aiming to reduce the overhead imposed in the control channel. Raumer \textit{et al.} proposed MonSamp \cite{raumer_2014:monsamp} to extract and sample network traffic directly from the data plane to monitor the Quality of Service (QoS). MonSamp queries the switches periodically to collect information about the current workload. Using this information MonSamp adjusts the amount of monitoring load that is obtained from the switches to avoid drops of the links and network devices.
+
+Tahaei \textit{et al.} proposed a multi-objective network measurement mechanism to overcome various overheads, like communication cost, controller computation, and accuracy in a real-time environment \cite{tahaei_2017:multi-objective}. To strike a trade-off between the flow statistic collection accuracy and incurred network overhead, this mechanism uses an adaptive flow statistical collection with a variable frequency algorithm to adjust the polling frequencies.
+
+\textbf{Second stream.}
+Peng \textit{et al.} proposed a scalable and programmable platform for joint host and network traffic management (HONE \cite{Sun_2015:HONE}). HONE uses software agents placed inside hosts and a module interacting with network devices to present a diverse collection of fine-grained monitoring statistics. These agents introduce significant network overhead because they require frequent queries to the individual devices to achieve a monitoring accurate. HONE minimizes this network overhead by performing lazy materialization of fine-grained statistics and scales the analysis by processing data locally on the end hosts.
+
+Jose \textit{et al.} \cite{jose_2011:online_measurement} presented a measurement framework where switches match packets against a small collection of wildcard rules available in Ternary Content Addressable Memory (TCAM) and update traffic counters for the highest-priority match. Additionally, this framework uses secondary controllers to read the counters and dynamically tune the rules to quickly “drill down” to identify large traffic aggregates. 
+
+Phan \textit{et al.} proposed a scalable framework (SDN-Mon \cite{phan2017:sdn_mon}) that provides network traffic monitoring in SDN in a flexible and fine-grained manner. This framework achieves more fine-grained and flexible monitoring in two steps: first, it decouples monitoring from existing forwarding tables. Second, it uses customized software agents in the switches to process its monitoring functionality. %Furthermore, Phan \textit{et al.} extended SDN-Mon to enable a adaptive and distributed monitoring capability \cite{phan2017:adaptive_sdn_mon}. 
+
+Liao \textit{et al.} proposed a solution for latency monitoring called LLDP-looping \cite{liao_2018:LLDP-looping}, this solution repeatedly injects time-stamped Link Layer Discovery Protocol (LLDP) packets into switches, which allows the RTT of all the network links to be continuously tracked for latency monitoring. LLDP-looping modifies the software of the control plane and data plane to implement a linear calibration function to reduce errors of measuring switch-controller delays and a greedy algorithm to minimize the overhead of said planes.
+
+\textbf{Third stream.}
+Tangari \textit{et al.} proposed a decentralized monitoring system for large scale SDN \cite{tangari_2017:decentralized_monitoring}. This system uses local managers, distributed over the network, to adaptively reconfigure the network resources (under their scope of responsibility). Furthermore, it uses entities installed on local managers to support a wide range of measurement tasks and requirements regarding monitoring rates and information granularity levels. Tangari \textit{et al.} also extended the previous work by proposing a self-adaptive and decentralized framework for resource monitoring in SDN \cite{Tangari_2018:adaptive_decentralized_monitoring}. This framework introduced a self-tuning, adaptive monitoring mechanism that automatically adjusts its settings based on the traffic dynamics, which enabled much more accurate statistics to be collected with a limited burden on the network resources.
+
+Tahaei \textit{et al.} made an extension to his previous work in presented in \cite{tahaei_2017:multi-objective}. This extension proposed a generic architecture for flow measurement in a data-center network, which applies in both single and multiple-controller \cite{tahaei_2018:cost_effective}. The three main features of this architecture are: first, it utilizes local controllers to pull flow statistic and forwards statistics to an upper layer application. Second, it has a coordinator level on top of all the local controllers connecting to the switches. Third, it is implemented as a standard northbound interface, which can utilize both fixed and adaptive polling systems.
+
+Phan \textit{et al.} proposed a mechanism that supports distributed monitoring capability of SDN-Mon (extended SDN-Mon \cite{phan2017:adaptive_sdn_mon}). Extended SDN-Mon introduces three additional modules: the switch module, the controller module, and the external module, which allow SDN-Mon can automatically assign the monitoring load to multiple monitoring switches in a balanced way and eliminate duplicated monitoring entries.
+
+\newcommand{\fcwidth}{3.2cm}
+\newcommand{\scwidth}{6.9cm}
+\newcommand{\tcwidth}{6.9cm}
+
+{\renewcommand{\arraystretch}{1.4}
+\begin{table*}[!htp]
+\begin{center}
+\footnotesize
+%\rowcolors{1}{lightgray}{white}
+\begin{tabularx}{\linewidth}{p{\fcwidth}p{\scwidth}p{\tcwidth}}
+\hline
+\centering{\textbf{Work}} & \centering{\textbf{Description}} & \centering\textbf{Shortcoming } & \hline
+    %###################################### First Stream ###################################################################
+    Payless \cite{chowdhury_2014:payless} & 
+    Uses adaptive sampling algorithms to adjust the amount of monitoring load to monitor the state of the network &
+\multirow{9}{*}{
+    \begin{minipage}{\scwidth}
+        They increase accuracy at the expense of adding Overhead (\textit{i.e.}, Imbalance in the Accuracy/Overhead)
+    \end{minipage}} \\\cline{1-2}
+    
+    MonSamp \cite{raumer_2014:monsamp} & 
+    Uses thresholds to adjust the amount of monitoring load to monitor the state of the network & \\\cline{1-2}
+    
+    OpenNetMon \cite{van_2014:OpenNetMon} & 
+    Uses an adaptive fetching mechanism to monitor per-flow metrics such as throughput, delay and packet loss & \\\cline{1-2}
+    
+    Tahaei \textit{et al.} \cite{tahaei_2017:multi-objective} & 
+    Uses an adaptive flow statistical collection with a variable frequency algorithm to adjust the polling frequencies & \\\cline{1-2}
+    
+    OpenTM \cite{Tootoonchian_2010:opentm} & 
+    Uses the routing information of the controller and flow forwarding path information for monitoring of link utilization & \\\hline
+    %###################################### Second Stream ###################################################################
+    HONE \cite{Sun_2015:HONE} & 
+    Uses software agents residing on hosts and a module interacting with network devices to manage monitoring activities   &
+\multirow{8}{*}{
+    \begin{minipage}{\scwidth}
+        They increase accuracy at the expense of adding resources/cost (\textit{i.e.}, Imbalance in the Accuracy/Resources/Costs)
+    \end{minipage}} \\\cline{1-2}
+    
+    Jose, \textit{et al.} \cite{jose_2011:online_measurement} & 
+    Uses a small set of matching rules and secondary controllers to identify and monitor aggregate flows & \\\cline{1-2}
+    
+    SDN-Mon \cite{phan2017:sdn_mon} & 
+    Decouples monitoring from existing forwarding tables and uses customized software agents in the switches to process its monitoring functionality & \\\cline{1-2}
+    
+    LLDP-looping \cite{liao_2018:LLDP-looping} & 
+    Injects time-stamped LLDP packets into switches to monitor latency  & \\\hline
+    %###################################### Third Stream ###################################################################
+    Tangari \textit{et al.} \cite{tangari_2017:decentralized_monitoring} & 
+    Uses local managers and entities to reconfigure the network resources and support monitoring tasks at different granularity levels   &
+\multirow{10}{*}{
+    \begin{minipage}{\scwidth}
+        They increase accuracy at the expense of losing flexibility and scalability (\textit{i.e.}, Imbalance in the Accuracy/Flexibility/Scalability)
+    \end{minipage}} \\\cline{1-2}
+    
+    Tangari \textit{et al.} \cite{Tangari_2018:adaptive_decentralized_monitoring} & 
+    Uses a self-tuning, adaptive monitoring mechanism that automatically adjusts its settings based on the traffic dynamics & \\\cline{1-2}
+    
+    Extended SDN-Mon \cite{phan2017:adaptive_sdn_mon} & 
+    Uses additional modules to distribute the monitoring entries over switches, select the switches to assign the monitoring tasks in a balanced fashion, and eliminate the duplicate monitoring entries   & \\\cline{1-2}
+    
+    Tahaei \textit{et al.} \cite{tahaei_2018:cost_effective} & 
+    Uses a hierarchy of controllers at two layers. The lower layer polls the flow statistic and forwards statistics to an upper layer application. The top layer coordinates the controllers of the lower level & \\\hline
+    
+%\hline
+\end{tabularx}
+\end{center}
+\caption{Comparison of current probing traffic monitoring methods in SDN}
+\label{tab:comparison_probing}
+\end{table*}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

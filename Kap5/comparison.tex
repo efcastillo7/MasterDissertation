@@ -1,0 +1,139 @@
+\section{Comparison}
+\label{sec:ipro_performance}
+IPro was compared to PPA (\textit{i.e.,} a pull-based approach targeted to monitor the network switches with a pre-defined probing interval) regarding CCO, CUC, and MA after and before the convergence time. The probing intervals tested were ranging between 1 and 15 seconds (in steps of 1 second). For each interval, the test was performed 32 times during 600 seconds (the initial 238 seconds correspond to convergence time), aiming at obtaining the average of CCO, CUC, and MA. Next, only the 4, 5, and 6 seconds probing intervals was analyzed because, in them, the MA of measurements of both throughput and delay metrics is higher than 80\%. Finally, the comparison of IPro with other adaptive approaches was extended by a qualitative analysis.
+
+\subsection{After Converging}
+\label{converge}
+
+\fontsize{7}{8}\selectfont
+{\renewcommand{\arraystretch}{1.4}
+\begin{table*}[!htp]
+\scriptsize
+\begin{center}
+\footnotesize
+\begin{tabularx}{\linewidth}{P{30mm}P{30mm}P{28mm}P{28mm}P{28mm}}
+\hline
+\textbf{\rotatebox[origin=c]{0}{Probing }}& \textbf{\rotatebox[origin=c]{0}{MA of}} &\textbf{\rotatebox[origin=c]{0}{MA of}}&\textbf{\rotatebox[origin=c]{0}{CUC [\%]}}&\textbf{\rotatebox[origin=c]{0}{CCO [\%]}}\\[-2ex]
+\textbf{\rotatebox[origin=c]{0}{Interval [s] }}& \textbf{\rotatebox[origin=c]{0}{Throughput [\%]}} &\textbf{\rotatebox[origin=c]{0}{Delay [\%]}}&\textbf{\rotatebox[origin=c]{0}{}}&\textbf{\rotatebox[origin=c]{0}{}}\\\hline
+
+\rowcolor{gray!20} IPro  &  96.17 & 94.78&  7.40 & 1.23  \\\hline
+PPA with 4     &  83.59 &  82.50&   20.60 & 17.40  \\\hline
+PPA with 5     &  91.38 &  89.50&   11.70 & 11.45  \\\hline
+PPA with 6     &  86.35 &  81.03&   10.10 & 11.33  \\\hline
+\end{tabularx}
+\caption{Comparison after converging}
+\label{tab:results_comparison_after}
+\end{center}
+\end{table*}
+}
+\normalsize
+
+After converging (\textit{i.e.,} the RL-agent has learned), the experimental results (\textit{cf.} Table~\ref{tab:results_comparison_after}) reveal diverse facts related to the use of RL for tuning the probing interval:
+
+\begin{itemize}
+    \item IPro has a CCO significantly smaller than PPA. The reduction in the intervals of 4, 5, and 6 seconds is around 16.17\%, 10.22\%, and 10.1\%, respectively.
+    \item IPro uses better the CPU of the controller than PPA about 13.2\%, 4.3\%, and 2.7\%, respectively.
+    \item IPro achieves a higher MA when used to measure the throughput metric than PPA about 12.58\%, 4.79\%, and 9.82\%, respectively.
+    \item IPro achieves a higher MA when used to measure the delay metric than PPA about 12.28\%, 5.28\%, and 13.75\%, respectively.
+\end{itemize}{}
+
+These facts are because, at each time step, IPro uses the network state for improving its control policies and, then, takes the best action based on the improved policies. These policies lead to better monitoring regarding CCO and CUC. To sum up, the RL-agent of IPro provides a good behavior in CCO and CUC without compromising MA.
+
+\subsection{Before Converging}
+
+\fontsize{7}{8}\selectfont
+{\renewcommand{\arraystretch}{1.4}
+\begin{table*}[!htp]
+\scriptsize
+\begin{center}
+\footnotesize
+%\rowcolors{1}{lightgray}{white}
+\begin{tabularx}{\linewidth}{P{30mm}P{30mm}P{28mm}P{28mm}P{28mm}}
+\hline
+\textbf{\rotatebox[origin=c]{0}{Probing }}& \textbf{\rotatebox[origin=c]{0}{MA of}} &\textbf{\rotatebox[origin=c]{0}{MA of}}&\textbf{\rotatebox[origin=c]{0}{CUC [\%]}}&\textbf{\rotatebox[origin=c]{0}{CCO [\%]}}\\[-2ex]
+\textbf{\rotatebox[origin=c]{0}{Interval [s] }}& \textbf{\rotatebox[origin=c]{0}{Throughput [\%]}} &\textbf{\rotatebox[origin=c]{0}{Delay [\%]}}&\textbf{\rotatebox[origin=c]{0}{}}&\textbf{\rotatebox[origin=c]{0}{}}\\\hline
+
+\rowcolor{gray!20} IPro  &  85.58 & 84.60 &  7.56 & 1.23  \\\hline
+PPA with 4     &  87.05 &  85.30&   22.32 & 17.40  \\\hline
+PPA with 5     &  90.63 &  91.50&   10.12 & 11.45  \\\hline
+PPA with 6     &  89.44 &  86.02&   11.08 & 11.33  \\\hline
+\end{tabularx}
+\caption{Comparison before converging}
+\label{tab:results_comparison_before}
+\end{center}
+\end{table*}
+}
+\normalsize
+Before converging (\textit{i.e.,} the RL-agent is learning), the experimental results (\textit{cf.} Table~\ref{tab:results_comparison_before}) reveal diverse facts related to the use of RL for tuning the probing interval. 
+
+\begin{itemize}
+    \item IPro achieves a smaller MA in the throughput measurement than PPA, about 1.44\%, 5.05\%, and 3.86\% in the intervals of 4, 5, and 6 seconds, respectively.
+    \item IPro achieves a smaller MA in the delay measurement than PPA, about 0.7\%, 6.9\%, and 1.42\%, respectively.
+\end{itemize}{}
+
+These facts are because, in this period, IPro explores the effect of each action on the network status (\textit{i.e.,} learning process). To sum up, IPro requires a time to capture the environment model before converging to the optimal policy. Conversely, as presented in Section~\ref{converge}, when the RL-agent converges to the optimal policy; it gets the most-rewarding probing interval that minimizes the performance degradation (regarding CCO and CUC) caused by monitoring tasks and improving MA (regarding throughput and delay).\\
+
+\subsection{Qualitative Analysis}
+
+\fontsize{9}{8}\selectfont
+\begin{table*}[!htp]
+\begin{center}
+\scriptsize
+\begin{longtable}{P{0.5cm}|P{0.2cm}|P{0.2cm}|P{0.2cm}|P{0.2cm}|P{0.2cm}|P{11.4cm}}
+%\begin{longtable}{P{0.8cm}|P{0.2cm}|P{0.2cm}|P{0.2cm}|P{0.2cm}|P{7.8cm}X}
+\caption{Comparison between IPro and other adaptive methods -- H $\rightarrow$ High and L $\rightarrow$ Low} \\
+\hline
+\multicolumn{1}{c|}{\textbf{Work}}& \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Adaptive}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Accuracy}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Overhead}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{CPU}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{ML}}} & \multicolumn{1}{c}{\textbf{\rotatebox[origin=c]{0}{Description}}} \\ 
+\hline 
+\endfirsthead
+
+\multicolumn{7}{c}%
+{{\bfseries \tablename\ \thetable{} -- Continued from previous page}} \\
+\hline 
+\multicolumn{1}{c|}{\textbf{Work}}& \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Adaptive}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Accuracy}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Overhead}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{CPU}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{ML}}} & \multicolumn{1}{c}{\textbf{\rotatebox[origin=c]{0}{Description}}} \\
+\hline 
+\endhead
+
+\hline \multicolumn{6}{r}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline \hline
+\endlastfoot
+
+\RaggedRight IPro & \checkmark & H & L & L & \checkmark & \justifying\noindent{An RL-based algorithm is used to get an optimal probing interval to achieve a trade-off between MA, CCO, and CUC} & \hline
+%###################################### First Stream ###################################################################
+\RaggedRight \cite{chowdhury_2014:payless}& \checkmark & H & H & H &  & \justifying\noindent{Adaptive sampling algorithms are used to tune the load level generated by monitoring process} & \hline
+
+\RaggedRight \cite{raumer_2014:monsamp}& \checkmark & H & H & H &  & \justifying\noindent{Thresholds are used to adjust the load level generated by monitoring process} & \hline
+
+\RaggedRight \cite{van_2014:OpenNetMon}& \checkmark & H & H & H &  & \justifying\noindent{An adaptive fetching mechanism monitors per-flow metrics, such as throughput, delay, and packet loss} & \hline
+
+\RaggedRight \cite{tahaei_2017:multi-objective}& \checkmark & H & L & L &  & \justifying\noindent{An adaptive flows statistical collection method is used to adjust the polling intervals} & \hline
+
+%###################################### Second Stream ###################################################################
+\RaggedRight \cite{jose_2011:online_measurement}& \checkmark & H & L & L &  & \justifying\noindent{A small set of matching rules and secondary controllers are used to identify and monitor aggregate flows} & \hline
+
+%###################################### Third Stream ###################################################################
+
+\RaggedRight \cite{Tangari_2018:adaptive_decentralized_monitoring}& \checkmark & H & L & L &  & \justifying\noindent{A self-tuning monitoring mechanism is used to automatically adapt its settings based on the traffic dynamism} & \hline
+
+\RaggedRight \cite{phan2017:adaptive_sdn_mon}& \checkmark & H & L & H &  & \justifying\noindent{Extra modules are included in the switches to distribute the monitoring tasks in a balanced way} & \hline
+
+\RaggedRight \cite{tahaei_2018:cost_effective}& \checkmark & H & L & L &  & \justifying\noindent{A two layers hierarchy of controllers is described. The lowest layer polls the flow statistic and forwards statistics to the top layer. The highest layer coordinates the controllers located at the lowest level}
+\label{tab:comparison-adptive-probing} & \hline
+\end{longtable}
+\end{center}
+\end{table*}
+\normalsize
+
+Table~\ref{tab:comparison-adptive-probing} presents a qualitative comparison between IPro and other adaptive methods, disclosing diverse facts. 
+
+\begin{itemize}
+    \item Methods such as \cite{chowdhury_2014:payless, raumer_2014:monsamp, van_2014:OpenNetMon} obtain accurate measurements using adaptive techniques and threshold-based methods at expenses of increasing CCO and CPU usage (\textit{i.e.}, imbalance between MA and CCO/CPU). IPro offers an RL-based algorithm that obtains accurate measurements with CCO and CPU usage negligible (\textit{i.e.,} achieves a trade-off between MA, CCO, and CUC).
+    
+    \item Methods such as \cite{jose_2011:online_measurement, Tangari_2018:adaptive_decentralized_monitoring, phan2017:adaptive_sdn_mon, tahaei_2018:cost_effective} obtain accurate measurements with low overhead using distributed controllers. These methods differ significantly from IPro. Whereas goal IPro is to optimize the probing interval, these methods focus on merges the collected statistics by every controller in an only statistic metric. 
+    
+    \item None of these adaptive approaches consider ML-bases mechanisms that optimize such a trade-off by learning from the network behavior, causing potential bottlenecks in the control channel, packet/flow loss, and performance drops.
+\end{itemize}{}
+
+Finally, in this qualitative analysis, it is essential to highlight two facts. The first one, the convergence time is an intrinsic parameter of RL-based approaches. The RL-agent exploits known actions to obtain a reward and explores new ones to make better decisions. This agent tries a variety of actions to progressively favor those that appear to be the best. The exploration and exploitation principles introduce a challenge related to the balance between them, which is known as the exploration-exploitation dilemma. This master dissertation does not address this challenge. Indeed, in the IPro prototype,  the e-greedy exploration method was used and did not test another one. Second, the learning time of any RL-agent depends mainly on the size of the space of states; due to it, this master dissertation used a finite one.

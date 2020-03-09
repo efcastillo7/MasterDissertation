@@ -1,0 +1,10 @@
+\section{Motivating Scenario}
+\label{sec:motivating_scenario}
+Let us assume that an Infrastructure Provider (InP) uses an SDN to offer services to one or more Internet Services Providers (ISPs). In particular, this provider provides its services by creating particularized slices for each ISP. Each slice must meet specific Service Level Agreements (SLAs) between InP and ISP. If a performance degradation occurs in one slice, the services provided by any ISP may also be affected, which can lead to non-compliance with the corresponding SLA. This non-compliance can lead to monetary and legal sanctions for InP.\\
+
+Considering the above-described scenario, it is necessary an efficient and reliable traffic monitoring approach that accurately and timely collects the statistics of flows; these statistics are indispensable to make decisions timely. There are three options to achieve this monitoring:
+\begin{itemize}
+    \item To use specialized software modules (\textit{i.e.}, agents that collect specific traffic) installed into the network devices or distributed controllers. Notwithstanding, this option does not support fine-grained monitoring and lacks flexibility and scalability; especially, in networks with a large number of flows \cite{jose_2011:online_measurement}.
+    \item To use control messages between switches and the centralized controller when a new flow comes in or upon the expiration of a flow entry in the table flow. This option is inaccurate under dynamic traffic conditions \cite{megyesi_2017:challenges}.
+    \item To use adaptive probing methods, but up to now, they do not offer a trade-off between MA, CCO, and CUC when the network workload is high. IPro provides an adaptive probing that offers such a trade-off by applying RL.
+\end{itemize}{}

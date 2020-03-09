@@ -1,0 +1,104 @@
+\section{SDN Monitoring}
+\label{sec:related_work}
+
+In general, network monitoring is a fundamental topic and an essential requirement for achieving TE \cite{feamster_2014:road_sdn,Boutaba2018,8255757}. IP networks are usually monitored with mechanisms such as NetFlow \cite{claise_2004:cisco}, jFlow \cite{myers_1999:jflow}, and sFlow \cite{wang_2004:sflow}. These mechanisms use probes connected to special modules placed inside switches. These probes collect either complete or sampled traffic statistics and send them to a central collector. NetFlow and JFlow are both proprietary solutions and incur a considerable up-front licensing and setup cost to be deployed in a network. sFlow is less expensive to deploy, but it is not widely adopted by the vendors \cite{chowdhury_2014:payless}. It is important to highlight that the network monitoring in traditional IP networks can lead to high overhead and significant switch resource consumption \cite{Curtis_2011:Mahout}. Recent research efforts have harnessed the power of SDN to propose solutions for such monitoring. This section presents some approaches to network monitoring found in the literature.\\
+
+Raumer \textit{et al.} introduced an application for the Quality of Service (QoS) monitoring, called MonSamp \cite{raumer_2014:monsamp}. MonSamp completely moves monitoring capabilities out of the controller and provides fully processed information to the applications by a Northbound API. To traffic collect, MonSamp provides sampling algorithms that can adapt to both current network load and the QoS requirements. In particular, MonSamp suggests decreasing the sampling rate under high traffic load. MonSamp uses thresholds to adjust the amount of monitoring overhead that is forwarded by the switches to allow a certain MA.\\
+
+Van Adrichem \textit{et al.} proposed OpenNetMon \cite{van_2014:OpenNetMon} to monitor network throughput, packet loss rates, and network delays continuously. OpenNetMon uses an adaptive probing mechanism to extract statistical information from the switches. The adaptive probing mechanism increases the rate of the queries when the flow rates differ between samples (increases the MA, CCO, and CUC) and decreases when flows stabilize (reduces the MA, CCO, and CUC).\\
+%Van Adrichem \textit{et al.} proposed OpenNetMon \cite{van_2014:OpenNetMon} to monitor network throughput, packet loss rates, and network delays continuously. First, to measure the throughput rate, it only probes the last switch on the forwarding path using an adaptive frequency. This switch returns the number of packets (S) of each flow in the sampling interval (T), and the forwarding path throughput is obtained as S/T. Second, to calculate packet loss rates, it probes the first and last switches on the forwarding path to obtain counter statistics. The packet loss rate of this forwarding path is obtained as the difference between the increment of the first and last counter in a measurement cycle divided by the time. Third, to calculate the delay, the OpenNetMon sends probe messages to data layers of the forwarding path, these messages get through all nodes of the path and finally return to the controller, where the delay is obtained by calculating time differences.\\
+
+Tahaei \textit{et al.} proposed a multi-objective network measurement mechanism \cite{tahaei_2017:multi-objective} to overcome the CCO, CUC, and MA in a real-time environment. To strike the trade-off between the MA and CCO, this mechanism uses an elastic probing for the collection of statistics from the switches. The elastic probing adaptively adjusts probing frequency based on the behavior of link utilization. In particular, it increases the probing frequency according to the bandwidth fluctuation of the flows (\textit{i.e.}, to higher bandwidth fluctuation higher probing frequency). Tahaei \textit{et al.} also made an extension to his previous work. This extension proposed a generic architecture for flow measurement in a data-center network, which applies in both single and multiple-controller \cite{tahaei_2018:cost_effective}. The three main features of this architecture are: first, it utilizes local controllers to pull flow statistic and forwards statistics to an upper layer application. Second, it has a coordinator level on top of all the local controllers connecting to the switches. Third, it is implemented as a standard northbound interface, which can utilize both fixed and adaptive polling systems.\\
+
+Tootoonchian \textit{et al.} proposed OpenTM \cite{Tootoonchian_2010:opentm} to estimate the traffic matrix using OpenFlow statistics (\textit{e.g.}, bytes and packet counters). OpenTM proposes several heuristics (\textit{e.g.}, last switch, round robin, uniform random selection, and non-uniform random selection) to (i) choose an optimal set of switches to be monitored for each flow and (ii) keep the trade-off between MA and CCO. After a switch has been selected, OpenTM probes the switch selected continuously for collecting flow level statistics. The choice of a heuristic defines the level of MA and CCO. For instance, the use of the last switch heuristic results in the most accurate traffic matrix but imposes a substantial overhead on edge switches. The price to use the uniform random selection heuristic is to lose some accuracy.\\
+
+Chowdhury \textit{et al.} proposed a flow measurement framework called PayLess \cite{chowdhury_2014:payless}. It is designed as a component of the OpenFlow controller, and it provides a RESTful API for flow statistics collection at different aggregation levels (\textit{e.g.}, flow, packet, and port). In particular,  this framework is responsible for parsing request commands from the application level of tasks and transforming these commands into path planning on some switches. PayLess adjusts the probing frequency to balance the CCO and MA. To achieve this balance, Payless relies on OpenTM \cite{Tootoonchian_2010:opentm} to select only important switches to be monitored. Nonetheless, instead of continuously probing a switch, PayLess offers an adaptive scheduling algorithm for probing that achieves the same level of accuracy as continuous probing with much less overhead.\\
+
+Peng \textit{et al.} proposed a traffic management solution (HONE) based on joint statistical information from the OpenFlow network and end hosts \cite{Sun_2015:HONE}. HONE uses software agents placed inside end hosts and a module that interacts with OpenFlow switches. HONE integrates information from the OpenFlow network and end hosts to present a diverse collection of fine-grained monitoring statistics. Furthermore, HONE offers two techniques to process flow statistics: The first technique, known as the lazy materialization of the measurement data, it uses database-like tables to represent the statistical information collected from hosts and network devices. Lazy materialization allows that both the controller and host agents use the statistical information collected in multiple management tasks. The second technique offers data parallel streaming operators for programming the data-analysis logic. The operators can also be used in a hierarchical fashion for aggregate analysis among multiple hosts.\\
+
+Phan \textit{et al.} proposed a scalable framework called SDN-Mon \cite{phan2017:sdn_mon}. SDN-Mon decouples monitoring from existing forwarding tables to allow more fine-grained and flexible monitoring. This framework uses a controller-side module and a switch-side module. The controller-side module defines a set of monitoring match fields based on the requirements of applications to allow higher flexibility. The switch-side module process the monitoring functionality of the framework to reduce the CCO. Phan \textit{et al.} \cite{phan2017:adaptive_sdn_mon} also proposed a mechanism that supports distributed monitoring capability of SDN-Mon. This extension introduces three additional modules: the switch module, the controller module, and the external module, which allow SDN-Mon can automatically assign the monitoring load to multiple monitoring switches in a balanced way and eliminate duplicated monitoring entries.\\
+
+Liao \textit{et al.} proposed a solution for latency monitoring called LLDP-looping \cite{liao_2018:LLDP-looping}. LLDP-looping monitors the latency of all network links by using agents placed inside switches and a controller module that interacts with them. The controller module uses a greedy algorithm to inject probe packets (i.e., time-stamped Link Layer Discovery Protocol (LLDP) packets) to a selected set of switches to minimize the CCO. The agents, first, forces to each probe packet to loop around a link for three times, then, calculates the RTT of the LLDP packet.\\
+
+Jose \textit{et al.} \cite{jose_2011:online_measurement} presented a monitoring framework that use secondary controllers to identify and monitor aggregates flows using a small set of rules that changes dynamically with traffic load.  In this framework, on the one hand, the switches match packets against a small collection of wildcard rules available in Ternary Content Addressable Memory (TCAM), then the counter of the matched highest priority rule is updated.  On the other hand, the controllers only read and analyze the relevant counters from the TCAM with fixed time intervals. Furthermore, the authors proposed a heavy hitters algorithm that identifies large traffic aggregates, striking a trade-off between MA and switch overhead.\\
+
+Tangari \textit{et al.} proposed a decentralized approach for resources monitoring \cite{tangari_2017:decentralized_monitoring}. This approach achieves high reconfiguration reactivity with acceptable accuracy and negligible CCO. It uses local managers, distributed over the network, to adaptively reconfigure the network resources (under their scope of responsibility). Furthermore, it uses entities installed on local managers to support a wide range of measurement tasks and requirements regarding monitoring rates and information granularity levels. Tangari \textit{et al.} also extended the previous work by proposing a self-adaptive and decentralized framework for resource monitoring  \cite{Tangari_2018:adaptive_decentralized_monitoring}. This framework uses a self-tuning, adaptive monitoring mechanism that automatically adjusts its settings based on the traffic dynamics, which improves the MA.
+
+\section{Research Gaps}
+
+\fontsize{9}{8}\selectfont
+\begin{table*}[!htp]
+\begin{center}
+\scriptsize
+\begin{longtable}{P{0.8cm}|P{0.2cm}|P{0.2cm}|P{0.2cm}|P{0.2cm}|P{11.8cm}}
+\caption{Traffic Monitoring in SDN -- H $\rightarrow$ High and L $\rightarrow$ Low} \\
+\hline
+\multicolumn{1}{c|}{\textbf{Work}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Accuracy}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Overhead}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Resources-Cost}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Flexibility-Scalability}}} & \multicolumn{1}{c}{\textbf{\rotatebox[origin=c]{0}{Description}}} \\ 
+\hline 
+\endfirsthead
+
+\multicolumn{6}{c}%
+{{\bfseries \tablename\ \thetable{} -- Continued from previous page}} \\
+\hline 
+\multicolumn{1}{c|}{\textbf{Work}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Accuracy}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Overhead}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Resources-Cost}}} & \multicolumn{1}{c|}{\textbf{\rotatebox[origin=c]{90}{Flexibility-Scalability}}} & \multicolumn{1}{c}{\textbf{\rotatebox[origin=c]{0}{Description}}} \\ 
+\hline 
+\endhead
+
+\hline \multicolumn{6}{r}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline \hline
+\endlastfoot
+
+%###################################### First Stream ###################################################################
+\RaggedRight \cite{su_2014:flowcover}& H & L & H & L & \justifying\noindent{\textcolor{reviewer3}{A heuristic algorithm (Greedy) is used to minimize the CCO, obtain the polling scheme efficiently, and handle flow changes}} & \hline
+
+\RaggedRight \cite{chowdhury_2014:payless}& H & H & H & H & \justifying\noindent{Adaptive sampling algorithms are used to tune the load level generated by monitoring process} & \hline
+
+\RaggedRight \cite{raumer_2014:monsamp}& H & H & H & H & \justifying\noindent{Thresholds are used to adjust the load level generated by monitoring process} & \hline
+
+\RaggedRight \cite{van_2014:OpenNetMon}& H & H & H & L & \justifying\noindent{An adaptive fetching mechanism monitors per-flow metrics, such as throughput, delay, and packet loss} & \hline
+
+\RaggedRight \cite{tahaei_2017:multi-objective}& H & H & L & H & \justifying\noindent{An adaptive flows statistical collection method is used to adjust the polling intervals} & \hline
+
+\RaggedRight \cite{Tootoonchian_2010:opentm}& H & H & L & H & \justifying\noindent{Routing information from the controller and flow forwarding path information are used to monitor the link utilization} & \hline
+%###################################### Second Stream ###################################################################
+\RaggedRight \cite{Sun_2015:HONE}& H & L & H & L & \justifying\noindent{Software agents residing on hosts interact with network devices to perform monitoring tasks} & \hline
+
+\RaggedRight \cite{jose_2011:online_measurement}& H & L & H & L & \justifying\noindent{A small set of matching rules and secondary controllers are used to identify and monitor aggregate flows} & \hline
+
+\RaggedRight \cite{phan2017:sdn_mon}& H & L & H & L & \justifying\noindent{Monitoring is decoupled from existing forwarding tables and uses customized software agents in the switches to process their monitoring functionality} & \hline
+
+\RaggedRight \cite{liao_2018:LLDP-looping}& H & L & H & L & \justifying\noindent{It injects time-stamped LLDP packets into switches to monitor the network latency} & \hline
+%###################################### Third Stream ###################################################################
+\RaggedRight \cite{tangari_2017:decentralized_monitoring}& H & L & H & L & \justifying\noindent{Local managers and entities are used to reconfigure the network resources and support monitoring tasks at different granularity level} & \hline
+
+\RaggedRight \cite{Tangari_2018:adaptive_decentralized_monitoring}& H & L & H & L & \justifying\noindent{A self-tuning monitoring mechanism is used to automatically adapt its settings based on the traffic dynamism} & \hline
+
+\RaggedRight \cite{phan2017:adaptive_sdn_mon}& H & L & H & L & \justifying\noindent{Extra modules are included in the switches to distribute the monitoring tasks in a balanced way} & \hline
+
+\RaggedRight \cite{tahaei_2018:cost_effective}& H & L & H & L & \justifying\noindent{A two layers hierarchy of controllers is described. The lowest layer polls the flow statistic and forwards statistics to the top layer. The highest layer coordinates the controllers located at the lowest level}
+\label{tab:comparison_probing} & \hline
+\end{longtable}
+\end{center}
+\end{table*}
+\normalsize
+
+Table~\ref{tab:comparison_probing} summarizes relevant works in the field of SDN monitoring, and reveals several facts:
+\begin{itemize}
+    \item Several works, such as \cite{su_2014:flowcover, Sun_2015:HONE,phan2017:sdn_mon,liao_2018:LLDP-looping,jose_2011:online_measurement,tangari_2017:decentralized_monitoring,Tangari_2018:adaptive_decentralized_monitoring,phan2017:adaptive_sdn_mon,tahaei_2018:cost_effective} minimize CCO and improve MA by adding modules, modifying flow tables in the data plane or distributing controllers. As a result, in these works, MA is increased at the expense of an increase in network resources and costs. Furthermore, these works do not support fine-grained monitoring and lack of flexibility and scalability needed to cope with a large amount of flows.
+    
+    \item Other works, such as \cite{chowdhury_2014:payless,raumer_2014:monsamp,van_2014:OpenNetMon, tahaei_2017:multi-objective,Tootoonchian_2010:opentm} use adaptive techniques, wildcards, threshold-based methods, and routing information to increase MA. Nevertheless, in these approaches, a network overhead (\textit{i.e.}, imbalance in the Accuracy/Overhead) is generated. Also, the controller is overloaded while collecting the flow information from switches.
+
+\end{itemize}{}
+
+Despite the progress in SDN monitoring, existing approaches still have some shortcomings:
+\begin{itemize}
+    \item They introduce overhead that degrades the network performance or require substantial economic investments.
+    
+    \item They do not optimize the probing interval by intelligent mechanisms intended to keep CCO and CUC within defined thresholds without compromising MA.
+\end{itemize}{}
+
+This master dissertation addresses these shortcomings by following the KDN paradigm. In particular, RL is used in the KP of KDN.\\
+
+So far, in the literature, it has not been proposed approaches-based on RL for SDN monitoring. However, the literature some works that use RL for other network tasks are exposed. Zhang \textit{et al.} proposed Q-placement \cite{zhang_2018-Q-placement}, an RL-based algorithm to optimally decide where to place the network services iteratively. Sampaio \textit{et al.} proposed a model of RL integrated into the Network Functions Virtualization (NFV) architecture using an agent that resides in the orchestrator, which guarantees the flexibility necessary to react to network conditions on demand \cite{sampaio_2018:using-nfv-rl}. Yu \textit{et al.} proposed an RL-based mechanism to achieve universal and customizable routing optimization \cite{yu_2018:drom}. Jiang \textit{et al.} used RL to provide an end-to-end adaptive HTTP  streaming media intelligent transmission architecture \cite{jiang_2018:q-fdba}. Wang \textit{et al.} presented a software-defined cognitive network for IoV (Internet of Vehicles) called SDCoR. SDCoR uses RL and SDN to provide an optimal routing policy adaptively through sensing and learning from the IoV environment \cite{Wang_2018:SDCoR}. Arteaga \textit{et al.} proposed an NFV scaling mechanism based on Q-Learning and Gaussian Processes, which uses an agent to carry out an improvement strategy of a scaling policy to make better decisions based on performance variations \cite{arteaga_2017:adaptive-scaling}.

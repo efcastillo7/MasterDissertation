@@ -1,0 +1,19 @@
+\section{Final Remarks}
+\label{sec:final_remarks_kap5}
+
+This chapter presented the test environment used to evaluate IPro, its prototype, and the evaluation. To reliably evaluate IPro, a realistic evaluation framework was used reflecting current and forecasted traffic patterns ( e.g., web, P2P, and video). In all experiments, only video and Web traffic were generated, in a proportion of 75\% to 25\%, respectively (given that the size of the video requests generates more traffic than web requests. Furthermore, all experiment results have a confidence level equal to or higher than 95\%. Such evaluation was carried out in terms of the following metrics: CCO, CUC, and MA. \\
+
+The evaluation results revealed several facts:
+\begin{itemize}
+    \item IPro has a CCO significantly smaller than PPA. The reduction in the intervals of 4, 5, and 6 seconds is around 16.17\%, 10.22\%, and 10.1\%, respectively.
+    \item In the same intervals, IPro uses better the CPU of the controller than PPA about 13.2\%, 4.3\%, and 2.7\%, respectively.
+    \item In the mentioned intervals, IPro achieves a higher MA when used to measure the throughput metric than PPA about 6.28\%, 1.28\%, and 4.05\%, respectively.
+    \item In the analyzed intervals, IPro achieves a higher MA when used to measure the delay metric than PPA about 9.9\%, 6.1\%, and 9.58\%, respectively. These facts are because, at each time step, IPro uses the network state for improving its control policies and, then, takes the best action based on the improved policies. These policies lead to better monitoring regarding CCO and CUC.
+    \item RL-agent does not consume intensively the KP resources, approximately 1\% -2\% of CPU and 30MBytes. Therefore, it can be stated that the IPro RL-agent is efficient regarding CPU and memory.% To sum up, IPro provides good behavior in CCO and CUC without compromising MA.
+\end{itemize}{}
+
+To sum up, the evaluation results demonstrate that, in terms of CCO, CUC, and MA, it is feasible to use the proposed approach for monitoring SDN. In this sense, such results confirming the relevance of the concepts of KDN (SDN and RL). \\
+
+From a qualitative point of view, the main characteristics provided by the proposal introduced in this master dissertation are: first, IPro offers an RL-based algorithm that obtains accurate measurements with CCO and CPU usage negligible (\textit{i.e.,} achieves a trade-off between MA, CCO, and CUC). Second, none of these adaptive approaches consider ML-bases mechanisms that optimize such a trade-off by learning from the network behavior, causing potential bottlenecks in the control channel, packet/flow loss, and performance drops. Third, current adaptive methods differ significantly from IPro. Whereas goal IPro is to optimize the probing interval, these methods focus on merges the collected statistics by every controller in an only statistic metric.\\
+
+According to the evaluation results and the qualitative characteristics of the proposed approach, it can be considered as a step forward in the network monitoring. KDN is led to a novel application domain located at the intersection of ML, SDN, and network monitoring.

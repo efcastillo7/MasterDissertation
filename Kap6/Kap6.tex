@@ -1,0 +1,55 @@
+\chapter{Conclusions}
+This chapter starts summarizing the research work carried out in this dissertation. Then, the answer is provided for the research question raised to guide the verification of the hypothesis defended in this master dissertation. Afterward, the main contributions achieved when conducting such verification are presented. Finally, directions for future work are outlined.\\
+
+This master dissertation presented the investigation carried out to verify the hypothesis: \textbf{``The Machine Learning allows intelligent probing on SDN, improving the accuracy traffic monitoring and reducing the corresponding overhead''}. Based on the hypothesis, an approach (called IPro) that follows the concept of the KDN paradigm was proposed. Such an approach determines the probing interval that keeps within thresholds (target values) the Control Channel Overhead (CCO) and the Extra CPU Usage of the Controller (CUC) using RL concept. \\
+
+This dissertation also presented the reference implementation of the IPro by a prototype, as well as its evaluation and analysis. The IPro prototype in an emulated environment  by using a campus network topology was evaluated. The evaluation results demonstrated that the proposed approach is effective for network monitoring because it achieved to keep the CCO less than 1.23\% and CUC less than 8\%. Furthermore, IPro has a better MA  ($\geq$ 90\%) than the Periodic Probing Approach (PPA), a pull-based approach that monitors the switches with a pre-defined probing interval. The experimental results also indicated that IPro requires considerable time (approximately 238 seconds) to converge to the target state. The contributions achieved in this dissertation are:
+
+ \begin{itemize}
+     \item The IPro architecture that provides a simple and efficient solution to monitor SDN-based networks by following KDN.
+     \item The RL-based algorithm that determines the probing interval considering network traffic variations and keeps CCO and CUC within target values.
+     \item The IPro prototype that implements the proposed architecture.
+ \end{itemize}{}
+
+\section{Answering the Research Question}
+\label{sec:answer_question}
+
+At the beginning of this dissertation, one research question was defined to guide the investigation about the feasibility of using KDN as a practical approach for intelligent probing in SDN. Such a question is revised and answered in the following paragraph.\\
+
+\paragraph{\textbf{Research Question:}} How to intelligently probing SDN with a high accuracy and with a negligible network overhead?\\
+
+\paragraph{\textbf{Answer:}} TE is an essential tool to assist the SDN operation \cite{ian_2014:a_road_map_sdn}, aiming at improving the utilization of network resources and enhancing the QoS. To carry out TE an efficient and reliable traffic monitoring approach that accurately and timely collects the statistics of flows is necessary. This accurate statistics collection implies an increase of CUC and CCO that can lead to an overload of the controller and significantly interfere with essential SDN functions, respectively. The proposed approach (IPro) permitted to overcome such CUC and CCO, confirming the importance of the concepts of KDN and RL. Using an extensive quantitative evaluation, it is demonstrated that in terms of CCO, CUC, and MA, IPro is an efficient approach for SDN monitoring. In fact, the evaluation results showed that the proposed approach is useful for network monitoring because it achieved to keep the CCO less than 1.23\% and CUC less than 8\%. Furthermore, IPro has a better MA ($\geq$ 90\%) than PPA, a pull-based approach that monitors the switches with a pre-defined probing interval.
+
+%To intelligently probing SDN with high accuracy and with a negligible network overhead, we can use RL. RL is a technique useful to maintain MA and decrease the overhead of monitoring in SDN because it allows optimizing the probing interval by interacting with the network itself (i.e., the environment in RL terms).
+
+\section{Contributions}
+\label{sec:contributions}
+
+This dissertation investigated the feasibility of using KDN as a practical approach for intelligent probing in SDN. The carrying out of such investigation led to the following significant contributions.
+
+\begin{itemize}
+    \item \textbf{The KDN-based architecture.} This architecture provides an efficient solution for tuning the probing interval in SDN, which keeps CCO and CUC within predefined thresholds while it maintains an acceptable MA.
+    \item \textbf{The RL-based algorithm.} This algorithm determines the probing interval considering network traffic variations, CCO, and CUC.
+    \item \textbf{The IPro prototype.} This prototype implements the proposed architecture.
+\end{itemize}{}
+
+The above-mentioned contributions were reported to the scientific community through paper submissions to renowned journals (see Appendix A).
+
+\begin{itemize}
+    \item A paper published in the journal Computer Networks. Colciencias index: A1. %Contribution: the reference architecture for SDN monitoring.
+    \item A paper submitted to the journal IEEE Latin America Transactions. Colciencias index: A2. %Contribution: 
+\end{itemize}{}
+
+%first, the IPro architecture that provides a simple and efficient solution to monitor SDN-based networks by following KDN. Second, the RL-based algorithm that determines the probing interval considering network traffic variations and keeps CCO and CUC within target values.
+
+\section{Future work}
+\label{sec:future_work}
+
+During the carrying out of this master dissertation, interesting opportunities for further research were observed. These opportunities are outlined below.
+
+\begin{itemize}
+    \item \textbf{Convergence time}. IPro was implemented and analyzed using only Q-learning approach. Therefore, there is an opportunity to extend it by using other methods such as model-free approach (\textit{e.g.,} Q-learning with Experience Replay) and model-based approach (\textit{e.g.,} Deep Reinforcement Learning) to reduce the convergence time.
+    \item \textbf{Reward function}. The reward function of IPro was analyzed only in terms of CCO and CUC. Thus, there is a chance to propose its reward function using other parameters such as MA and computational resources of switches, aiming at improving the probing interval estimation.
+\end{itemize}
+
+%Future work includes exploring model-free approaches (\textit{e.g.,} Q-learning with Experience Replay) and model-based approaches (\textit{e.g.,} Deep Reinforcement Learning) to reduce the convergence time. We also want to correlate other parameters (\textit{e.g.,} computational resources of switches) in the reward function, aiming at improving the probing interval estimation.

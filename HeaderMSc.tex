@@ -1,0 +1,139 @@
+\documentclass[12pt,spanish,fleqn,openany,letterpaper,pagesize]{scrbook} %report, scrbook
+
+\usepackage[ansinew]{inputenc}
+\usepackage[english]{babel}
+\usepackage{dingbat}
+\usepackage{fancyhdr}
+\usepackage{epsfig}
+\usepackage{epic}
+\usepackage{eepic}
+\usepackage{amsmath}
+\usepackage{threeparttable}
+\usepackage{amscd}
+\usepackage{here}
+\usepackage{graphicx}
+\usepackage{lscape}
+\usepackage{tabularx}
+\usepackage{subfigure}
+\usepackage{longtable}
+\usepackage{tabularx,colortbl}
+\usepackage{color}
+\usepackage{xcolor}
+
+\usepackage{titlesec}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+%tables
+\usepackage{pbox}
+\usepackage{longtable} % para tablas largas
+\usepackage{lipsum}
+\usepackage{ragged2e}
+% centering cells
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+%Numbers with circle:
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+%algorithm2e and comment style
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\newenvironment{english_algorithm}[1][htb]
+  {\renewcommand{\algorithmcfname}{Algorithm}% Update algorithm name
+   \begin{algorithm}[#1]%
+  }{\end{algorithm}}
+
+%///////////////////////////////////
+%\usepackage[utf8]{inputenc}
+% Hyper-references
+\usepackage[unicode=true, bookmarks=true,bookmarksnumbered=true,bookmarksopen=false, breaklinks=true, pdfborder={0 0 0},backref=page,colorlinks=true]{hyperref}
+\hypersetup{pdftitle={Master Dissertation Intelligent Probing for SDN Monitoring}, pdfauthor={Edwin Ferney Castillo Quintero}, colorlinks=true, citecolor=blue,linkcolor=black, urlcolor=green}
+
+\usepackage{rotating} %Para rotar texto, objetos y tablas seite. No se ve en DVI solo en PS. Seite 328 Hundebuch
+                        %se usa junto con \rotate, \sidewidestable ....
+
+\usepackage{svg}
+
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}
+\renewcommand{\thefigure}{\textbf{\thechapter-\arabic{figure}}}
+\renewcommand{\thetable}{\textbf{\thechapter-\arabic{table}}}
+
+
+\pagestyle{fancyplain}%\addtolength{\headwidth}{\marginparwidth}
+
+%color linea del header
+%\renewcommand{\headrulewidth}{2pt}% 2pt header rule
+%\renewcommand{\headrule}{\hbox to\headwidth{%
+%  \color{red}\leaders\hrule height \headrulewidth\hfill}}
+
+%\oddsidemarginDenota el margen izquierdo de una p ́agina impar
+%.\evensidemarginDenota el margen izquierdo en una p ́agina par
+%http://ima.udg.es/Docencia/3105200736/tema9p.pdf
+%\textheight22.5cm \topmargin0cm \textwidth16.5cm
+\textheight22.0cm \topmargin0cm \textwidth16.5cm
+\oddsidemargin0.5cm \evensidemargin-0.5cm%
+
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\; #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\; #1}}
+
+\lhead[\fancyplain{}{\thepage}]{\fancyplain{}{\rightmark}}
+\rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{\thepage}}
+\fancyfoot{}
+\thispagestyle{fancy}%
+
+
+
+\addtolength{\headwidth}{0cm}
+\unitlength1mm %Define la unidad LE para Figuras
+\mathindent0cm %Define la distancia de las formulas al texto,  fleqn las descentra
+\marginparwidth0cm
+\parindent0cm %Define la distancia de la primera linea de un parrafo a la margen
+
+%Para tablas,  redefine el backschlash en tablas donde se define la posici\'{o}n del texto en las
+%casillas (con \centering \raggedright o \raggedleft)
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\let\PBS=\PreserveBackslash
+
+%Espacio entre lineas
+\renewcommand{\baselinestretch}{1.1}
+
+%Neuer Befehl f\"{u}r die Tabelle Eigenschaften der Aktivkohlen
+\newcommand{\arr}[1]{\raisebox{1.5ex}[0cm][0cm]{#1}}
+
+%Neue Kommandos
+\usepackage{Befehle}
+
+
+%Trennungsliste
+\hyphenation {Q-learning swit-ches}
+
+\usepackage{pbsi}
+\usepackage[T1]{fontenc}
+
+\usepackage{datetime}
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH] \THEYEAR}
+
+\newdateformat{yeardateonly}{%
+  \yearname \THEYEAR} 
+  
+%Command             10pt    11pt    12pt
+%\tiny               5       6       6
+%\scriptsize         7       8       8
+%\footnotesize       8       9       10
+%\small              9       10      10.95
+%\normalsize         10      10.95   12
+%\large              12      12      14.4
+%\Large              14.4    14.4    17.28
+%\LARGE              17.28   17.28   20.74
+%\huge               20.74   20.74   24.88
+%\Huge               24.88   24.88   24.88
+
+%enumerate list with circle
+\newcommand*\circled[1]{\kern-2.5em%
+  \put(0,4){\color{blue}\circle*{18}}\put(0,4){\circle{16}}%
+  \put(-3,0){\color{white}\bfseries\large#1}~~}
+\usepackage{enumitem}
+
+%Including pages from PDF documents - https://texblog.org/2011/10/26/including-pages-from-pdf-documents/
+\usepackage{pdfpages}
