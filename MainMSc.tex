@@ -1,0 +1,57 @@
+\input{HeaderMSc}
+%\includeonly{Kap1/Kap1,Kap2/Kap2}
+\begin{document}
+%\maketitle
+\pagenumbering{roman}
+\include{CoverSheet/TitleSheetMSc}
+
+\renewcommand{\tablename}{\textbf{Table}}
+\renewcommand{\figurename}{\textbf{Figure}}
+\renewcommand{\listtablename}{List of Tables}
+\renewcommand{\listfigurename}{List of Figures}
+\newcommand{\listbbreviaturename}{List of abbreviations and Acronyms}
+\renewcommand{\contentsname}{Content}
+
+\newpage{\pagestyle{empty}\cleardoublepage}
+\newpage
+
+%\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+\tableofcontents
+%\listoftables
+\newpage{\pagestyle{empty}\cleardoublepage}
+\newpage
+
+\include{Tab_Simbolos/abbrevations}
+\include{Tab_Simbolos/ListFigures}
+\include{Tab_Simbolos/ListTables}
+
+%\newpage{\pagestyle{empty}\cleardoublepage}
+\newpage
+%\thispagestyle{empty} \textbf{}
+%\normalsize
+%\\\\\\%
+
+%\include{Kap1/abstract}
+%\include{Resumen}%\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+\pagenumbering{arabic}
+\include{Kap1/Kap1}
+\include{Kap2/Kap2}
+%\afterpage{\null\newpage}
+\newpage{\null\newpage}
+\newpage
+\include{Kap3/Kap3}
+\include{Kap4/Kap4}
+
+\newpage{\null\newpage}
+\newpage
+\include{Kap5/Kap5}
+\include{Kap6/Kap6}
+
+
+\addcontentsline{toc}{chapter}{Bibliography}
+%\bibliographystyle{plaindin_esp}
+\bibliographystyle{ieeetr}
+\bibliography{BibliMSc}
+
+\include{Anexos/Anexos}
+\end{document}
